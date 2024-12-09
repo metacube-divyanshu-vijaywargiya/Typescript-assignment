@@ -9,6 +9,35 @@
 </head>
 <body>
     <div id="form-container"></div>
+
+    <div id="ticketsection" class="ticket" style="display: none;">
+        <button id="print">Print Ticket</button>
+        <h3 style="text-align: center;"><strong>Vehicle Pass Ticket</strong></h3>
+        <div class="infoTicket">
+            <div class="employee-info">
+                <h4>Employee Information</h4>
+                <p><strong>Employee ID:</strong> <span id="employeeIdTicket" style="color: #2e8dfa;"></span></p>
+                <p><strong>Name:</strong> <span id="employeeName" style="color: #2e8dfa;"></span></p>
+                <p><strong>Email:</strong> <span id="employeeEmail" style="color: #2e8dfa;"></span></p>
+                <p><strong>Phone Number:</strong> <span id="employeeNumber" style="color: #2e8dfa;"></span></p>
+            </div>
+            <div class="vehicle-info">
+                <h4>Vehicle Information</h4>
+                <p><strong>Vehicle Type:</strong> <span id="vehicleTypeDisplay" style="color: #2e8dfa;"></span></p>
+                <p><strong>Vehicle Name:</strong> <span id="vehicleNameDisplay" style="color: #2e8dfa;"></span></p>
+                <p><strong>Vehicle Number:</strong> <span id="vehicleNumberDisplay" style="color: #2e8dfa;"></span></p>
+            </div>
+        </div>
+        <div class="plan-info">
+            <div><strong>Selected Plan:</strong> <span id="selectedPlan"></span></div>
+            <div><strong>Plan Pricing:</strong> <span id="selectedPlanPricing"></span></div>
+        </div>
+    </div>
+    
+
+    <h2>Existing Employees</h2>
+    <div id="existing_employees"></div>
+
     <script type="module"  src="./js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
 

@@ -1,4 +1,4 @@
-import { generateOptionMenu } from "./optionMenu";
+import { generateOptionMenu } from "./optionMenu.js";
 window.onload = () => {
     generateOptionMenu();
 };

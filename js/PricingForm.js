@@ -1,6 +1,6 @@
-import { Pricing } from "./Pricing"; // Assuming Pricing class is defined in pricing.ts
+import { Pricing } from "./Pricing.js"; // Assuming Pricing class is defined in pricing.ts
 // import swal from "../js/sweetalert/typings/core";
-import { generateOptionMenu } from "./optionMenu";
+import { generateOptionMenu } from "./optionMenu.js";
 export class PricingForm {
     constructor(vehicle) {
         this.vehicle = vehicle;
@@ -59,18 +59,41 @@ export class PricingForm {
             }
         }
         else {
-            // swal("Please select a pass plan.");
+            alert("Please select a pass plan.");
         }
     }
     showPassDetails() {
+        var _a;
+        0;
         const formContainer = document.querySelector("#form-container");
         if (!formContainer)
             return;
         formContainer.innerHTML = ''; // Clear previous input
-        const passDetails = document.createElement("h3");
-        passDetails.textContent = `You have selected a ${this.vehicle.selectedPlan} Pass for ₹${this.vehicle.passPrice}.`;
-        formContainer.appendChild(passDetails);
-        formContainer.innerHTML = '';
+        const ticketSection = document.getElementById('ticketsection');
+        const allEmnployees = JSON.parse(localStorage.getItem("employees"));
+        let employeeDetails = null;
+        allEmnployees.some((employee) => {
+            if (employee.employeeId == this.vehicle.employeeId) {
+                employeeDetails = employee;
+            }
+        });
+        if (ticketSection) {
+            // Set the values in the ticket section
+            document.getElementById('selectedPlan').innerText = this.vehicle.selectedPlan;
+            document.getElementById('selectedPlanPricing').innerText = `₹${this.vehicle.passPrice}`;
+            document.getElementById('vehicleTypeDisplay').innerText = this.vehicle.type; // Assuming vehicle type is stored in the vehicle object
+            document.getElementById('employeeIdTicket').innerText = this.vehicle.employeeId; // Assuming vehicle type is stored in the vehicle object
+            document.getElementById('employeeName').innerText = employeeDetails.name; // Assuming vehicle type is stored in the vehicle object
+            document.getElementById('employeeEmail').innerText = employeeDetails.emailId; // Assuming vehicle type is stored in the vehicle object
+            document.getElementById('employeeNumber').innerText = employeeDetails.contact; // Assuming vehicle type is stored in the vehicle object
+            document.getElementById('vehicleNameDisplay').innerText = this.vehicle.name;
+            document.getElementById('vehicleNumberDisplay').innerText = this.vehicle.vehicleNumber;
+            // Make the ticket section visible
+            ticketSection.style.display = 'block';
+            (_a = document.getElementById("print")) === null || _a === void 0 ? void 0 : _a.addEventListener("click", () => {
+                window.print();
+            });
+        }
         generateOptionMenu();
     }
 }

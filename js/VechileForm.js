@@ -1,5 +1,5 @@
-import { Vehicle } from "./vehicle"; // Assuming Vehicle class is defined in vehicle.ts
-import { PricingForm } from "./PricingForm"; // Assuming PricingForm is defined in pricingForm.ts
+import { Vehicle } from "./vehicle.js"; // Assuming Vehicle class is defined in vehicle.ts
+import { PricingForm } from "./PricingForm.js"; // Assuming PricingForm is defined in pricingForm.ts
 export class VehicleForm {
     constructor(vehicles) {
         this.vehicle = new Vehicle("", "", "", "", "");
@@ -42,8 +42,8 @@ export class VehicleForm {
         vehicleTypeSelect.innerHTML = `
             <option value="">--Select Vehicle Type--</option>
             <option value="Cycle">Cycle</option>
-            <option value="Two Wheeler">Two Wheeler</option>
-            <option value="Four Wheeler">Four Wheeler</option>
+            <option value="TwoWheeler">Two Wheeler</option>
+            <option value="FourWheeler">Four Wheeler</option>
         `;
         vehicleTypeSelect.onchange = () => this.handleVehicleTypeChange(vehicleTypeSelect.value);
         formContainer.appendChild(vehicleTypeSelect);

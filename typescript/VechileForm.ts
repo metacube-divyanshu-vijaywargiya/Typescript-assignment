@@ -53,8 +53,8 @@ export class VehicleForm {
         vehicleTypeSelect.innerHTML = `
             <option value="">--Select Vehicle Type--</option>
             <option value="Cycle">Cycle</option>
-            <option value="Two Wheeler">Two Wheeler</option>
-            <option value="Four Wheeler">Four Wheeler</option>
+            <option value="TwoWheeler">Two Wheeler</option>
+            <option value="FourWheeler">Four Wheeler</option>
         `;
         vehicleTypeSelect.onchange = () => this.handleVehicleTypeChange(vehicleTypeSelect.value);
         formContainer.appendChild(vehicleTypeSelect);
@@ -140,8 +140,6 @@ export class VehicleForm {
 
         // Now we will show the pricing options based on the vehicle type
         new PricingForm(this.vehicle); // Pass the vehicle object to the PricingForm
-
-
     }
 
 

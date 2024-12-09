@@ -1,6 +1,6 @@
-import { Employee } from "./employee";
+import { Employee } from "./employee.js";
 // import { VehicleForm } from "./VechileForm";
-import { generateOptionMenu } from "./optionMenu";
+import { generateOptionMenu } from "./optionMenu.js";
 export class EmployeeForm {
     constructor(employees, vehicles) {
         this.employee = new Employee("", "", "", "", "", 0);
@@ -39,6 +39,9 @@ export class EmployeeForm {
         if (!formContainer)
             return;
         formContainer.innerHTML = ''; // Clear previous input
+        const formHeading = document.createElement("h3");
+        formHeading.textContent = "Employee Registration";
+        formContainer.appendChild(formHeading);
         const inputLabel = document.createElement("label");
         inputLabel.textContent = label;
         formContainer.appendChild(inputLabel);
@@ -60,6 +63,9 @@ export class EmployeeForm {
         if (!formContainer)
             return;
         formContainer.innerHTML = ''; // Clear previous input
+        const formHeading = document.createElement("h3");
+        formHeading.textContent = "Employee Registration";
+        formContainer.appendChild(formHeading);
         const inputLabel = document.createElement("label");
         inputLabel.textContent = "Enter Gender:";
         formContainer.appendChild(inputLabel);
@@ -91,22 +97,33 @@ export class EmployeeForm {
         const selectedGender = document.querySelector('input[name="gender"]:checked');
         if (selectedGender) {
             this.employee.gender = selectedGender.value;
+            this.currentStep++;
+            this.displayNextField();
         }
-        this.currentStep++;
-        this.displayNextField();
+        else {
+            alert("Please select a gender.");
+        }
     }
     handleInput(field, value) {
         let isValid = false;
         switch (field) {
             case "name":
                 isValid = this.validateName(value);
-                if (isValid)
+                if (isValid) {
                     this.employee.name = value;
+                }
+                else {
+                    alert("Please enter valid name.");
+                }
                 break;
             case "emailId":
                 isValid = this.validateEmail(value);
-                if (isValid)
+                if (isValid) {
                     this.employee.emailId = value;
+                }
+                else {
+                    alert("Please enter valid email.");
+                }
                 break;
             case "password":
                 const passwordStrength = this.validatePassword(value);
@@ -115,16 +132,27 @@ export class EmployeeForm {
                     this.employee.password = value;
                     isValid = true; // Only consider valid if it's strong
                 }
+                else {
+                    alert("Please enter strong password.");
+                }
                 break;
             case "employeeId":
                 isValid = this.validateEmployeeId(value); // Add validation for employee ID
-                if (isValid)
+                if (isValid) {
                     this.employee.employeeId = value;
+                }
+                else {
+                    alert("Please enter valid Employee Id.");
+                }
                 break;
             case "contact":
                 isValid = this.validateContact(value);
-                if (isValid)
+                if (isValid) {
                     this.employee.contact = Number(value);
+                }
+                else {
+                    alert("Please enter valid Contact Number.");
+                }
                 break;
         }
         if (isValid) {
@@ -180,18 +208,31 @@ export class EmployeeForm {
         }
     }
     validateEmployeeId(employeeId) {
+        let exisitingEmployees = JSON.parse(localStorage.getItem("employees"));
+        // Check if the employee ID already exists
+        const employeeExists = exisitingEmployees.some((employee) => employee.employeeId === employeeId);
+        if (employeeExists) {
+            alert("Employee with this EmpId Already Exists!");
+            return false; // Return false if the employee ID already exists
+        }
         // Check if the employee ID is not empty and is a valid format (e.g., alphanumeric)
         const isValid = employeeId.trim() !== "" && /^[a-zA-Z0-9]+$/.test(employeeId);
-        return isValid;
+        console.log(isValid);
+        return isValid; // Return the validity of the employee ID
     }
     validateContact(contact) {
-        // Check if the contact number is numeric and has more than 8 digits
-        const isValid = /^\d+$/.test(contact) && contact.length > 8;
+        // Check if the contact number is numeric and has 10 digits
+        const isValid = /^\d+$/.test(contact) && contact.length == 10;
         return isValid;
     }
     submitEmployee() {
         this.employees.push(this.employee);
-        localStorage.setItem("employees", JSON.stringify(this.employees));
+        // Retrieve existing employees from local storage
+        let employeesTillNow = JSON.parse(localStorage.getItem("employees")) || [];
+        // Push the new employee into the array
+        employeesTillNow.push(this.employee);
+        // Store the updated array back to local storage
+        localStorage.setItem("employees", JSON.stringify(employeesTillNow));
         console.log("Employee Information:", this.employee);
         console.log("Employee's List:", this.employees);
         // swal("Employee information collected successfully!");

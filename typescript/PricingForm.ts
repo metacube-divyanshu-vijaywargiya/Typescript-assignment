@@ -69,20 +69,43 @@ export class PricingForm {
                 this.showPassDetails();
             }
         } else {
-            // swal("Please select a pass plan.");
+            alert("Please select a pass plan.");
         }
     }
 
-    private showPassDetails(): void {
+    private showPassDetails(): void {0
         const formContainer = document.querySelector("#form-container");
         if (!formContainer) return;
 
         formContainer.innerHTML = ''; // Clear previous input
+        const ticketSection = document.getElementById('ticketsection');
+        const allEmnployees = JSON.parse(localStorage.getItem("employees")!);
+        let employeeDetails = null;
+        allEmnployees.some((employee : any)=>{
+            if(employee.employeeId == this.vehicle.employeeId){
+                employeeDetails = employee;
+            }
+        })
 
-        const passDetails = document.createElement("h3");
-        passDetails.textContent = `You have selected a ${this.vehicle.selectedPlan} Pass for ₹${this.vehicle.passPrice}.`;
-        formContainer.appendChild(passDetails);
-        formContainer.innerHTML='';
+        if (ticketSection) {
+            // Set the values in the ticket section
+            (document.getElementById('selectedPlan') as HTMLElement).innerText = this.vehicle.selectedPlan;
+            (document.getElementById('selectedPlanPricing') as HTMLElement).innerText = `₹${this.vehicle.passPrice}`;
+            (document.getElementById('vehicleTypeDisplay') as HTMLElement).innerText = this.vehicle.type; // Assuming vehicle type is stored in the vehicle object
+            (document.getElementById('employeeIdTicket') as HTMLElement).innerText = this.vehicle.employeeId; // Assuming vehicle type is stored in the vehicle object
+            (document.getElementById('employeeName') as HTMLElement).innerText = employeeDetails!.name; // Assuming vehicle type is stored in the vehicle object
+            (document.getElementById('employeeEmail') as HTMLElement).innerText = employeeDetails!.emailId; // Assuming vehicle type is stored in the vehicle object
+            (document.getElementById('employeeNumber') as HTMLElement).innerText = employeeDetails!.contact; // Assuming vehicle type is stored in the vehicle object
+            (document.getElementById('vehicleNameDisplay') as HTMLElement).innerText = this.vehicle.name;
+            (document.getElementById('vehicleNumberDisplay')  as HTMLElement).innerText = this.vehicle.vehicleNumber;
+    
+            // Make the ticket section visible
+            ticketSection.style.display = 'block';
+
+            document.getElementById("print")?.addEventListener( "click" , ()=>{
+                window.print(); 
+            })
+        }
         generateOptionMenu();
     }
 }
